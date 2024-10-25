@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS System Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!--    <link rel="stylesheet" href="style.css">-->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        #wrapper {
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #sidebar-wrapper {
+            min-width: 250px;
+            max-width: 250px;
+        }
+
+        #page-content-wrapper {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .sidebar-heading {
+            font-size: 1.5rem;
+        }
+
+        .card {
+            border-radius: 8px;
+            border: none;
+        }
+
+        .btn {
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        .list-group-item {
+            border: none;
+        }
+
+        .modal .modal-header, .modal .modal-footer {
+            border: none;
+        }
+        .btns{
+            display: flex;
+            align-items: center;
+            margin: 20px ;
+        }
+        .btns #add_btn{
+            margin: 20px;
+        }
+        .btns #delete_btn{
+            margin: 20px;
+        }
+        .btns #update_btn{
+            margin: 20px;
+        }
+        .btns #search_btn{
+            margin: 20px;
+        }
+        .side-and-nav{
+            display: flex;
+        }
+        .customer{
+            margin-left: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="wrapper"></div>
+<div class="side-and-nav">
+    <div class="bg-dark border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading text-white text-center py-4">POS Dashboard</div>
+        <div class="list-group list-group-flush">
+            <a href="#" class="list-group-item list-group-item-action bg-dark text-white" onclick="showSection('customer')">Manage Customers</a>
+            <a href="#" class="list-group-item list-group-item-action bg-dark text-white" onclick="showSection('store')">Manage Store</a>
+            <a href="#" class="list-group-item list-group-item-action bg-dark text-white" onclick="showSection('order')">Manage Orders</a>
+        </div>
+    </div>
+    <section id="customer-section" class="customer">
+        <div class="card my-4">
+            <div class="card-header">Enter Customer Details</div>
+            <div class="card-body">
+                <form id="customerForm">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                        </div>
+                        <div class="col">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="mobile" class="form-label">Mobile Number</label>
+                            <input type="text" class="form-control" id="mobile" placeholder="Mobile Number" required>
+                        </div>
+                        <div class="col">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Email" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <textarea class="form-control" id="address" rows="3" placeholder="Enter Address" required></textarea>
+                    </div>
+                    <div class="btns">
+                        <button id="add_btn" type="button" class="btn btn-primary w-20">Add Customer</button>
+                        <button id="delete_btn" type="button" class="btn btn-primary w-20">Delete Customer</button>
+                        <button id="update_btn" type="button" class="btn btn-primary w-20">Update Customer</button>
+                        <button id="search_btn" type="button" class="btn btn-primary w-20">Search Customer</button>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+        <!-- Customer Table -->
+        <h3 class="mt-5">Customer List</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+<script>
+    let dashboard = document.getElementById("dashboard-nav");
+let customer = document.getElementById("customer-nav");
+let item = document.getElementById("item-nav");
+let order = document.getElementById("order-nav");
+let order_history = document.getElementById("order-history-nav");
+
+let dashboard_section = document.getElementById("dashboard-section");
+let customer_section = document.getElementById("customer-section");
+let item_section = document.getElementById("item-section");
+let order_section = document.getElementById("order-section");
+let order_history_section = document.getElementById("order-history-section");
+
+
+
+customer_nav.addEventListener('click', function () {
+    dashboard_section.style.display="none"
+    customer_section.style.display="block";
+    item_section.style.display="none";
+    order_section.style.display="none";
+    order_history_section.style.display="none";
+});
+    item_nav.addEventListener('click', function () {
+        dashboard_section.style.display="none"
+        customer_section.style.display="none";
+        item_section.style.display="block";
+        order_section.style.display="none";
+        order_history_section.style.display="none";
+    });
+    order_nav.addEventListener('click', function () {
+        dashboard_section.style.display="none"
+        customer_section.style.display="none";
+        item_section.style.display="none";
+        order_section.style.display="block";
+        order_history_section.style.display="none";
+    });
+    dashboard_nav.addEventListener('click', function () {
+        dashboard_section.style.display="block"
+        customer_section.style.display="none";
+        item_section.style.display="none";
+        order_section.style.display="none";
+        order_history_section.style.display="none";
+    });</script>
+
+</body>
+</html>
