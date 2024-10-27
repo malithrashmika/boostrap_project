@@ -11,101 +11,50 @@
             font-family: 'Arial', sans-serif;
             background: #44b5b5;
         }
-
-        #wrapper {
-            display: flex;
-            width: 90%;
-            overflow: hidden;
-        }
-
-        #sidebar-wrapper {
-            min-width: 250px;
-            max-width: 250px;
-            background-color: #343a40;
-            height: fit-content;
-            padding-bottom: 1000px;
-        }
-
-        #page-content-wrapper {
-            flex-grow: 1;
-            padding: 20px;
-        }
-
-        .sidebar-heading {
-            font-size: 1.5rem;
-            color: white;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .list-group-item {
-            background-color: #343a40;
-            color: white;
-        }
-
-        .list-group-item:hover {
-            background-color: #495057;
-        }
-
-        .card {
-            border-radius: 8px;
-            border: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            margin-top: 20px;
-        }
-
-        .modal .modal-header, .modal .modal-footer {
-            border: none;
-        }
-
-        .content-section {
-            display: none;
-        }
-
-        .active {
-            display: block !important;
-        }
-
-        .btns {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .table-section {
-            margin-top: 30px;
-        }
-        .content-section h2{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family:Cambria ;
-            color: aliceblue;
-            font-weight: 50;
-
-        }
     </style>
 </head>
 <body>
 
 <div id="wrapper">
     <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-        <div class="sidebar-heading">POS Dashboard</div>
-        <div class="list-group list-group-flush">
-            <a href="#" class="list-group-item" id="dashboard-nav">Dashboard</a>
-            <a href="#" class="list-group-item" id="customer-nav">Manage Customers</a>
-            <a href="#" class="list-group-item" id="item-nav">Manage Items</a>
-            <a href="#" class="list-group-item" id="order-nav">Manage Orders</a>
-<!--           <a href="#" class="list-group-item" id="order-history-nav">Order History</a>-->
-        </div>
-    </div>
-    <div class="page-content">
-        <nav class=""></nav>
-    </div>
+<!--    <div id="sidebar-wrapper">-->
+<!--        <div class="sidebar-heading">POS Dashboard</div>-->
+<!--        <div class="list-group list-group-flush">-->
+<!--            <a href="#" class="list-group-item" id="dashboard-nav">Dashboard</a>-->
+<!--            <a href="#" class="list-group-item" id="customer-nav">Manage Customers</a>-->
+<!--            <a href="#" class="list-group-item" id="item-nav">Manage Items</a>-->
+<!--            <a href="#" class="list-group-item" id="order-nav">Manage Orders</a>-->
+<!--&lt;!&ndash;           <a href="#" class="list-group-item" id="order-history-nav">Order History</a>&ndash;&gt;-->
+<!--        </div>-->
+<!--    </div>-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Dashboard</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <span id="dashboard-nav" class="nav-link">Dashboard</span>
+                        </li>
+                        <li class="nav-item">
+                            <span id="customer-nav" class="nav-link">Customer Management</span>
+                        </li>
+                        <li class="nav-item">
+                            <span  id="item-nav" class="nav-link">Item Management</span>
+                        </li>
+                        <li class="nav-item">
+                            <span  id="order-nav" class="nav-link">Place Order</span>
+                        </li>
+                        <li class="nav-item">
+                            <span id="order-history-nav" class="nav-link">Order History</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
@@ -229,7 +178,6 @@
         <!-- Manage Items Section -->
         <div id="item-section" class="content-section">
             <h2>Manage Items</h2>
-            <p>Here you can add, update, search, and delete store items.</p>
             <!-- Add forms and tables for item management -->
             <div class="card my-4">
                 <div class="card-header">Customer Details</div>
@@ -304,7 +252,6 @@
         <!-- Manage Orders Section -->
         <div id="order-section" class="content-section">
             <h2>Manage Orders</h2>
-            <p>Here you can add, update, search, and delete customer orders.</p>
 
             <!-- Order Form -->
             <div class="card my-4">
@@ -380,6 +327,11 @@
     let item_section = document.getElementById("item-section");
     let order_section = document.getElementById("order-section");
 
+    dashboard_section.style.display = "block";
+    customer_section.style.display = "none";
+    item_section.style.display = "none";
+    order_section.style.display = "none";
+
     // Function to hide all sections
     function hideAllSections() {
         dashboard_section.style.display = "none";
@@ -387,6 +339,7 @@
         item_section.style.display = "none";
         order_section.style.display = "none";
     }
+
 
     // Event listener for Dashboard button
     dashboard_nav.addEventListener('click', function () {
@@ -411,7 +364,6 @@
         hideAllSections(); // Hide all other sections
         order_section.style.display = "block"; // Show order section
     });
-
 </script>
 
 </body>

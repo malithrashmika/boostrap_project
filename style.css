@@ -1,64 +1,64 @@
-body {
-    font-family: 'Arial', sans-serif;
-}
+/*body {*/
+/*    font-family: 'Arial', sans-serif;*/
+/*}*/
 
-#wrapper {
-    display: flex;
-    width: 100%;
-    overflow: hidden;
-}
+/*#wrapper {*/
+/*    display: flex;*/
+/*    width: 100%;*/
+/*    overflow: hidden;*/
+/*}*/
 
-#sidebar-wrapper {
-    min-width: 250px;
-    max-width: 250px;
-}
+/*#sidebar-wrapper {*/
+/*    min-width: 250px;*/
+/*    max-width: 250px;*/
+/*}*/
 
-#page-content-wrapper {
-    flex-grow: 1;
-    padding: 20px;
-}
+/*#page-content-wrapper {*/
+/*    flex-grow: 1;*/
+/*    padding: 20px;*/
+/*}*/
 
-.sidebar-heading {
-    font-size: 1.5rem;
-}
+/*.sidebar-heading {*/
+/*    font-size: 1.5rem;*/
+/*}*/
 
-.card {
-    border-radius: 8px;
-    border: none;
-}
+/*.card {*/
+/*    border-radius: 8px;*/
+/*    border: none;*/
+/*}*/
 
-.btn {
-    margin-bottom: 10px;
-}
+/*.btn {*/
+/*    margin-bottom: 10px;*/
+/*}*/
 
-h2 {
-    margin-top: 20px;
-}
+/*h2 {*/
+/*    margin-top: 20px;*/
+/*}*/
 
-.list-group-item {
-    border: none;
-}
+/*.list-group-item {*/
+/*    border: none;*/
+/*}*/
 
-.modal .modal-header, .modal .modal-footer {
-    border: none;
-}
- .btns{
-  display: flex;
-  align-items: center;
-  margin: 20px ;
- }
- .btns #add_btn{
-     margin: 20px;
- }
-.btns #delete_btn{
-    margin: 20px;
-}
-.btns #update_btn{
-    margin: 20px;
-}
-.btns #search_btn{
-    margin: 20px;
-}
-.side-and-nav{
-    display: flex;
-}
+/*.modal .modal-header, .modal .modal-footer {*/
+/*    border: none;*/
+/*}*/
+/* .btns{*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  margin: 20px ;*/
+/* }*/
+/* .btns #add_btn{*/
+/*     margin: 20px;*/
+/* }*/
+/*.btns #delete_btn{*/
+/*    margin: 20px;*/
+/*}*/
+/*.btns #update_btn{*/
+/*    margin: 20px;*/
+/*}*/
+/*.btns #search_btn{*/
+/*    margin: 20px;*/
+/*}*/
+/*.side-and-nav{*/
+/*    display: flex;*/
+/*}*/
