@@ -76,23 +76,30 @@
             right: 0;
             margin: auto;
         }
+        .nav-link{
+            justify-content: center;
+            font-family: 'Roboto', sans-serif;
+            color: antiquewhite;
+            font-weight: bold;
+        }
+        .nav-link:hover{
+            border: 2px solid white;
+            border-radius:5px 5px 0px 0px ;
+            stroke-opacity: 50%;
+        }
+        #navbarNav{
+        margin-right: 450px;
+        }
+        .nav-item{
+            margin-left: 50px;
+        }
+
     </style>
 
 </head>
 <body>
 
 <div id="wrapper">
-    <!-- Sidebar -->
-<!--    <div id="sidebar-wrapper">-->
-<!--        <div class="sidebar-heading">POS Dashboard</div>-->
-<!--        <div class="list-group list-group-flush">-->
-<!--            <a href="#" class="list-group-item" id="dashboard-nav">Dashboard</a>-->
-<!--            <a href="#" class="list-group-item" id="customer-nav">Manage Customers</a>-->
-<!--            <a href="#" class="list-group-item" id="item-nav">Manage Items</a>-->
-<!--            <a href="#" class="list-group-item" id="order-nav">Manage Orders</a>-->
-<!--&lt;!&ndash;           <a href="#" class="list-group-item" id="order-history-nav">Order History</a>&ndash;&gt;-->
-<!--        </div>-->
-<!--    </div>-->
         <nav id="navigate" class="navbar navbar-expand-lg ">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
@@ -107,13 +114,13 @@
                             <span id="dashboard-nav" class="nav-link">Dashboard</span>
                         </li>
                         <li class="nav-item">
-                            <span id="customer-nav" class="nav-link">Customer Management</span>
+                            <span id="customer-nav" class="nav-link">Customer</span>
                         </li>
                         <li class="nav-item">
-                            <span  id="item-nav" class="nav-link">Item Management</span>
+                            <span  id="item-nav" class="nav-link">Item</span>
                         </li>
                         <li class="nav-item">
-                            <span  id="order-nav" class="nav-link">Place Order</span>
+                            <span  id="order-nav" class="nav-link">Order</span>
                         </li>
                         <li class="nav-item">
                             <span id="order-history-nav" class="nav-link">Order History</span>
@@ -210,35 +217,14 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
                         <th scope="col">Mobile</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Address</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>123456789</td>
-                        <td>mark@example.com</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>987654321</td>
-                        <td>jacob@example.com</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>Bird</td>
-                        <td>555555555</td>
-                        <td>larry@example.com</td>
-                    </tr>
+                    <tbody id="customerTableBody">
                     </tbody>
                 </table>
             </div>
@@ -290,29 +276,11 @@
                     <tr>
                         <th scope="col">ITEM-ID</th>
                         <th scope="col">ITEM-Name</th>
-                        <th scope="col">ITEM-Price</th>
                         <th scope="col">ITEM-Quantity</th>
+                        <th scope="col">ITEM-Price</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>123456789</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>987654321</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>Bird</td>
-                        <td>555555555</td>
-                    </tr>
+                    <tbody id="itemTableBody">
                     </tbody>
                 </table>
             </div>
@@ -379,6 +347,41 @@
             </div>
         </div>
 
+        <!-- Order History Section (wrap with new div) -->
+        <div id="order-history-section" class="content-section" style="display: none;">
+            <h2>Order History</h2>
+            <table class="table table-bordered table-striped mt-3">
+                <thead>
+                <tr>
+                    <th>Order Date</th>
+                    <th>Customer Name</th>
+                    <th>Total Price</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="orderHistoryBody">
+                <!-- Order rows will be added here -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Modal to Show Order Details -->
+        <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="orderDetailsModalLabel">Order Items</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul id="orderItemsList" class="list-group">
+                            <!-- Order items will be dynamically added here -->
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
     </div>
 </div>
 
@@ -390,16 +393,20 @@
     let customer_nav = document.getElementById("customer-nav");
     let item_nav = document.getElementById("item-nav");
     let order_nav = document.getElementById("order-nav");
+    let order_history_nav = document.getElementById("order-history-nav");
 
     let dashboard_section = document.getElementById("dashboard-section");
     let customer_section = document.getElementById("customer-section");
     let item_section = document.getElementById("item-section");
     let order_section = document.getElementById("order-section");
+    let order_history_section = document.getElementById("order-history-section"); // New variable
 
+    // Initially display only the dashboard
     dashboard_section.style.display = "block";
     customer_section.style.display = "none";
     item_section.style.display = "none";
     order_section.style.display = "none";
+    order_history_section.style.display = "none"; // Hide order history initially
 
     // Function to hide all sections
     function hideAllSections() {
@@ -407,32 +414,35 @@
         customer_section.style.display = "none";
         item_section.style.display = "none";
         order_section.style.display = "none";
+        order_history_section.style.display = "none"; // Add order history to hideAllSections
     }
 
-
-    // Event listener for Dashboard button
+    // Event listeners for navigation
     dashboard_nav.addEventListener('click', function () {
-        hideAllSections(); // Hide all other sections
-        dashboard_section.style.display = "block"; // Show dashboard section
+        hideAllSections();
+        dashboard_section.style.display = "block";
     });
 
-    // Event listener for Manage Customers button
     customer_nav.addEventListener('click', function () {
-        hideAllSections(); // Hide all other sections
-        customer_section.style.display = "block"; // Show customer section
+        hideAllSections();
+        customer_section.style.display = "block";
     });
 
-    // Event listener for Manage Items button
     item_nav.addEventListener('click', function () {
-        hideAllSections(); // Hide all other sections
-        item_section.style.display = "block"; // Show item section
+        hideAllSections();
+        item_section.style.display = "block";
     });
 
-    // Event listener for Manage Orders button
     order_nav.addEventListener('click', function () {
-        hideAllSections(); // Hide all other sections
-        order_section.style.display = "block"; // Show order section
+        hideAllSections();
+        order_section.style.display = "block";
     });
+
+    order_history_nav.addEventListener('click', function () {
+        hideAllSections();
+        order_history_section.style.display = "block"; // Show order history section
+    });
+
 </script>
 </body>
 </html>

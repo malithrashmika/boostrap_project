@@ -6,208 +6,443 @@
     <title>POS System Dashboard</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<!--    <link rel="stylesheet" href="style.css">-->
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Arima:wght@100..700&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Arima:wght@100..700&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Oxanium:wght@200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
-        #wrapper {
-            display: flex;
-            width: 100%;
-            overflow: hidden;
-        }
+        @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-        #sidebar-wrapper {
-            min-width: 250px;
-            max-width: 250px;
+        body{
+            font-family: 'Roboto', sans-serif;
         }
-
-        #page-content-wrapper {
-            flex-grow: 1;
-            padding: 20px;
+        * {
+            margin: 0;
+            padding: 0;
         }
-
-        .sidebar-heading {
-            font-size: 1.5rem;
-        }
-
-        .card {
-            border-radius: 8px;
-            border: none;
+        i {
+            margin-right: 10px;
         }
 
         .btn {
-            margin-bottom: 10px;
+            font-family: "Oxanium", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+        }
+        #wrapper{
+
+        }
+        #navigate {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: #831af8;
+        }
+        #page-content-wrapper {
+            padding-top: 90px; /* Adjust this value if necessary */
+        }
+        .navbar-brand {
+            top: 0;
+            left: 0;
+            font-size: 25px;
+            color:purple;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: default;
+            animation: slideRight 1s ease forwards;
         }
 
-        h2 {
-            margin-top: 20px;
+        .pos-logo {
+            width: 60px; /* Adjust the size */
+            height: 60px; /* Maintain aspect ratio */
+            aspect-ratio: 1/1;
         }
-
-        .list-group-item {
-            border: none;
-        }
-
-        .modal .modal-header, .modal .modal-footer {
-            border: none;
-        }
-        .btns{
+        .content-section{
+            width: 90%;
+            z-index: 1;
+            padding-top: 20px;
             display: flex;
-            align-items: center;
-            margin: 20px ;
+            justify-content: space-between;
+            height: 90vh;
+            align-items: stretch;
+            border-radius: 20px;
+            flex-wrap: nowrap;
+            flex-direction: column-reverse;
+            align-content: center;
+            position: relative;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
         }
-        .btns #add_btn{
-            margin: 20px;
+        .nav-link{
+            justify-content: center;
+            font-family: 'Roboto', sans-serif;
+            color: antiquewhite;
+            font-weight: bold;
         }
-        .btns #delete_btn{
-            margin: 20px;
+        .nav-link:hover{
+            border: 2px solid white;
+            border-radius:5px 5px 0px 0px ;
+            stroke-opacity: 50%;
         }
-        .btns #update_btn{
-            margin: 20px;
+        #navbarNav{
+            margin-right: 450px;
         }
-        .btns #search_btn{
-            margin: 20px;
-        }
-        .side-and-nav{
-            display: flex;
-        }
-        .customer{
+        .nav-item{
             margin-left: 50px;
         }
+
     </style>
+
 </head>
 <body>
 
-<div id="wrapper"></div>
-<div class="side-and-nav">
-    <div class="bg-dark border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading text-white text-center py-4">POS Dashboard</div>
-        <div class="list-group list-group-flush">
-            <a href="#" class="list-group-item list-group-item-action bg-dark text-white" onclick="showSection('customer')">Manage Customers</a>
-            <a href="#" class="list-group-item list-group-item-action bg-dark text-white" onclick="showSection('store')">Manage Store</a>
-            <a href="#" class="list-group-item list-group-item-action bg-dark text-white" onclick="showSection('order')">Manage Orders</a>
-        </div>
-    </div>
-    <section id="customer-section" class="customer">
-        <div class="card my-4">
-            <div class="card-header">Enter Customer Details</div>
-            <div class="card-body">
-                <form id="customerForm">
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
-                        </div>
-                        <div class="col">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label for="mobile" class="form-label">Mobile Number</label>
-                            <input type="text" class="form-control" id="mobile" placeholder="Mobile Number" required>
-                        </div>
-                        <div class="col">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Email" required>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <textarea class="form-control" id="address" rows="3" placeholder="Enter Address" required></textarea>
-                    </div>
-                    <div class="btns">
-                        <button id="add_btn" type="button" class="btn btn-primary w-20">Add Customer</button>
-                        <button id="delete_btn" type="button" class="btn btn-primary w-20">Delete Customer</button>
-                        <button id="update_btn" type="button" class="btn btn-primary w-20">Update Customer</button>
-                        <button id="search_btn" type="button" class="btn btn-primary w-20">Search Customer</button>
-                    </div>
-
-
-                </form>
+<div id="wrapper">
+    <nav id="navigate" class="navbar navbar-expand-lg ">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img  class="pos-logo" src="Assets/img.png">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <span id="dashboard-nav" class="nav-link">Dashboard</span>
+                    </li>
+                    <li class="nav-item">
+                        <span id="customer-nav" class="nav-link">Customer</span>
+                    </li>
+                    <li class="nav-item">
+                        <span  id="item-nav" class="nav-link">Item</span>
+                    </li>
+                    <li class="nav-item">
+                        <span  id="order-nav" class="nav-link">Order</span>
+                    </li>
+                    <li class="nav-item">
+                        <span id="order-history-nav" class="nav-link">Order History</span>
+                    </li>
+                </ul>
             </div>
         </div>
-        <!-- Customer Table -->
-        <h3 class="mt-5">Customer List</h3>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-            </tr>
-            </tbody>
-        </table>
-    </section>
-</div>
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
-<script>
-    let dashboard = document.getElementById("dashboard-nav");
-let customer = document.getElementById("customer-nav");
-let item = document.getElementById("item-nav");
-let order_nav = document.getElementById("order-nav");
-let order_history_nav = document.getElementById("order-history-nav");
-
-let dashboard_section = document.getElementById("dashboard-section");
-let customer_section = document.getElementById("customer-section");
-let item_section = document.getElementById("item-section");
-let order_section = document.getElementById("order-section");
-let order_history_section = document.getElementById("order-history-section");
+    </nav>
 
 
 
-customer_nav.addEventListener('click', function () {
-    dashboard_section.style.display="none"
-    customer_section.style.display="block";
-    item_section.style.display="none";
-    order_section.style.display="none";
-    order_history_section.style.display="none";
-});
-    item_nav.addEventListener('click', function () {
-        dashboard_section.style.display="none"
-        customer_section.style.display="none";
-        item_section.style.display="block";
-        order_section.style.display="none";
-        order_history_section.style.display="none";
-    });
-    order_nav.addEventListener('click', function () {
-        dashboard_section.style.display="none"
-        customer_section.style.display="none";
-        item_section.style.display="none";
-        order_section.style.display="block";
-        order_history_section.style.display="none";
-    });
-    dashboard_nav.addEventListener('click', function () {
-        dashboard_section.style.display="block"
-        customer_section.style.display="none";
-        item_section.style.display="none";
-        order_section.style.display="none";
-        order_history_section.style.display="none";
-    });</script>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="content-section">
+            <div class="container-fluid">
+                <!-- Dashboard Cards Section -->
+                <div class="row mt-4">
+                    <div class="col-lg-4 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Customers</h5>
+                                <p class="card-text">Manage all customer information.</p>
+                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#customerModal">Register Customer</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Products</h5>
+                                <p class="card-text">Manage store inventory.</p>
+                                <a href="#" class="btn btn-primary">Add Product</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Orders</h5>
+                                <p class="card-text">View and manage customer orders.</p>
+                                <a href="#" class="btn btn-primary">View Orders</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- Manage Customers Section -->
+        <div id="customer-section" class="content-section">
+            <h2>Manage Customers</h2>
+            <div class="card my-4">
+                <div class="card-header">Customer Details</div>
+                <div class="card-body">
+                    <form id="customerForm">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="Enter First Name" required>
+                            </div>
+                            <div class="col">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="mobile" class="form-label">Mobile Number</label>
+                                <input type="text" class="form-control" id="mobile" placeholder="Enter Mobile Number" required>
+                            </div>
+                            <div class="col">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter Email" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control" id="address" rows="3" placeholder="Enter Address" required></textarea>
+                        </div>
+                        <div class="btns">
+                            <button id="add_btn" type="button" class="btn btn-primary w-20">Add Customer</button>
+                            <button id="delete_btn" type="button" class="btn btn-danger w-20">Delete Customer</button>
+                            <button id="update_btn" type="button" class="btn btn-warning w-20">Update Customer</button>
+                            <button id="search_btn" type="button" class="btn btn-info w-20">Search Customer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Customer List Table -->
+            <div class="table-section">
+                <h3>Customer List</h3>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Address</th>
+                    </tr>
+                    </thead>
+                    <tbody id="customerTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Manage Items Section -->
+        <div id="item-section" class="content-section">
+            <h2>Manage Items</h2>
+            <!-- Add forms and tables for item management -->
+            <div class="card my-4">
+                <div class="card-header">Customer Details</div>
+                <div class="card-body">
+                    <form id="Item-Form">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="Item-ID" class="form-label">Item ID</label>
+                                <input type="text" class="form-control" id="Item-ID" placeholder="Enter Item ID" required>
+                            </div>
+                            <div class="col">
+                                <label for="Item-Name" class="form-label">Item Name</label>
+                                <input type="text" class="form-control" id="Item-Name" placeholder="Enter Item Name" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="Item-price" class="form-label">Unit Price</label>
+                                <input type="number" class="form-control" id="Item-price" placeholder="Enter Unit price" required>
+                            </div>
+                            <div class="col">
+                                <label for="Item-quantity" class="form-label">Quantity</label>
+                                <input type="number" class="form-control" id="Item-quantity" placeholder="Enter Quantity" required>
+                            </div>
+                        </div>
+                        <div class="btns">
+                            <button id="item_add_btn" type="button" class="btn btn-primary w-20">Add Item</button>
+                            <button id="item_delete_btn" type="button" class="btn btn-danger w-20">Delete Item</button>
+                            <button id="item_update_btn" type="button" class="btn btn-warning w-20">Update Item</button>
+                            <button id="item_search_btn" type="button" class="btn btn-info w-20">Search Item</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Customer List Table -->
+            <div class="table-section">
+                <h3>Customer List</h3>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">ITEM-ID</th>
+                        <th scope="col">ITEM-Name</th>
+                        <th scope="col">ITEM-Quantity</th>
+                        <th scope="col">ITEM-Price</th>
+                    </tr>
+                    </thead>
+                    <tbody id="itemTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Manage Orders Section -->
+        <div id="order-section" class="content-section">
+            <h2>Manage Orders</h2>
+
+            <!-- Order Form -->
+            <div class="card my-4">
+                <div class="card-body">
+                    <form id="orderForm">
+                        <div class="mb-3">
+                            <label for="customerSelect" class="form-label">Select Customer</label>
+                            <select class="form-select" id="customerSelect" required>
+                                <option selected disabled value="">Choose a customer</option>
+                                <option value="Customer 1">Customer 1</option>
+                                <option value="Customer 2">Customer 2</option>
+                                <option value="Customer 3">Customer 3</option>
+                            </select>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="itemSelect" class="form-label">Select Item</label>
+                                <select class="form-select" id="itemSelect" required>
+                                    <option selected disabled value="">Choose an item</option>
+                                    <option value="Item 1" data-price="10">Item 1 ($10)</option>
+                                    <option value="Item 2" data-price="20">Item 2 ($20)</option>
+                                    <option value="Item 3" data-price="15">Item 3 ($15)</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="quantity" class="form-label">Quantity</label>
+                                <input type="number" class="form-control" id="quantity" placeholder="Enter quantity" required>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" onclick="addItemToOrder()">Add Item to Order</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Order Table -->
+            <h3 class="mt-5">Order Details</h3>
+            <table class="table table-bordered table-striped mt-3">
+                <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody id="orderTableBody">
+                <!-- Order items will be added here -->
+                </tbody>
+            </table>
+
+            <!-- Order Total & Place Order Button -->
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 id="orderTotal">Order Total: $0.00</h4>
+                <button class="btn btn-success" onclick="placeOrder()">Place Order</button>
+            </div>
+        </div>
+
+        <!-- Order History Section (wrap with new div) -->
+        <div id="order-history-section" class="content-section" style="display: none;">
+            <h2>Order History</h2>
+            <table class="table table-bordered table-striped mt-3">
+                <thead>
+                <tr>
+                    <th>Order Date</th>
+                    <th>Customer Name</th>
+                    <th>Total Price</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="orderHistoryBody">
+                <!-- Order rows will be added here -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Modal to Show Order Details -->
+        <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="orderDetailsModalLabel">Order Items</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul id="orderItemsList" class="list-group">
+                            <!-- Order items will be dynamically added here -->
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript to control section visibility
+        let dashboard_nav = document.getElementById("dashboard-nav");
+        let customer_nav = document.getElementById("customer-nav");
+        let item_nav = document.getElementById("item-nav");
+        let order_nav = document.getElementById("order-nav");
+        let order_history_nav = document.getElementById("order-history-nav");
+
+        let dashboard_section = document.getElementById("dashboard-section");
+        let customer_section = document.getElementById("customer-section");
+        let item_section = document.getElementById("item-section");
+        let order_section = document.getElementById("order-section");
+        let order_history_section = document.getElementById("order-history-section"); // New variable
+
+        // Initially display only the dashboard
+        dashboard_section.style.display = "block";
+        customer_section.style.display = "none";
+        item_section.style.display = "none";
+        order_section.style.display = "none";
+        order_history_section.style.display = "none"; // Hide order history initially
+
+        // Function to hide all sections
+        function hideAllSections() {
+            dashboard_section.style.display = "none";
+            customer_section.style.display = "none";
+            item_section.style.display = "none";
+            order_section.style.display = "none";
+            order_history_section.style.display = "none"; // Add order history to hideAllSections
+        }
+
+        // Event listeners for navigation
+        dashboard_nav.addEventListener('click', function () {
+            hideAllSections();
+            dashboard_section.style.display = "block";
+        });
+
+        customer_nav.addEventListener('click', function () {
+            hideAllSections();
+            customer_section.style.display = "block";
+        });
+
+        item_nav.addEventListener('click', function () {
+            hideAllSections();
+            item_section.style.display = "block";
+        });
+
+        order_nav.addEventListener('click', function () {
+            hideAllSections();
+            order_section.style.display = "block";
+        });
+
+        order_history_nav.addEventListener('click', function () {
+            hideAllSections();
+            order_history_section.style.display = "block"; // Show order history section
+        });
+
+    </script>
 </body>
 </html>
