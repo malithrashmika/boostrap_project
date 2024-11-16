@@ -1,20 +1,20 @@
 export default class CustomerModel {
-    constructor(id, first_name, last_name, mobile, email, address) {
-        this._id = id;
+    constructor(customer_id, first_name, last_name, mobile, email, address) {
+        this._customer_id = customer_id;
         this._first_name = first_name;
         this._last_name = last_name;
         this._mobile = mobile;
         this._email = email;
         this._address = address;
     }
-    get id() {
-        return this._id;
+
+    get customer_id() {
+        return this._customer_id;
     }
 
-    set id(id) {
-        this._id=id;
+    set customer_id(value) {
+        this._customer_id = value;
     }
-
 
     get first_name() {
         return this._first_name;
@@ -55,5 +55,4 @@ export default class CustomerModel {
     set address(value) {
         this._address = value;
     }
-
 }
