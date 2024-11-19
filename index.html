@@ -255,7 +255,7 @@
                                             <div >
                                                 <label for="inputCustomerId" class="form-label">Select Customer</label>
                                                 <select class="form-select" id="inputCustomerId" required>
-                                                    <option selected disabled value="">Choose Customer</option>
+                                                    <option value=""  disabled selected>Select Customer ID</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -278,17 +278,23 @@
                                     <div class="col">
                                         <label for="itemSelect" class="form-label">Select Item</label>
                                         <select class="form-select" id="itemSelect" required>
-                                            <option selected disabled value="">Choose an item</option>
+                                            <option value=""  disabled selected>Select Item ID</option>
                                         </select>
                                     </div>
                                     <div class="col">
-                                        <label for="inputOrderModel" class="form-label">Model</label>
+                                        <label for="inputItemName" class="form-label">Description</label>
                                         <div>
-                                            <input class="form-control border border-black" type="text" id="inputOrderModel" aria-label="readonly input example" readonly>
+                                            <input class="form-control border border-black" type="text" id="inputItemName" aria-label="readonly input example" readonly>
                                         </div>
                                     </div>
                                 </div>
                                 <div id="order-qty-sec"></div>
+                                <div class="col">
+                                    <label for="inputPrice" class="form-label" >Price</label>
+                                    <div >
+                                        <input class="form-control border border-black" type="text" id="inputPrice" aria-label="readonly input example" readonly>
+                                    </div>
+                                </div>
                                 <div class="col">
                                     <label for="inputOnHandQty" class="form-label" >On Hand Quantity</label>
                                     <div >
@@ -300,7 +306,7 @@
                                     <input type="number" class="form-control" id="quantity" placeholder="Enter quantity" required>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-primary w-100" onclick="addItemToOrder()">Add Item to Order</button>
+                            <button type="button" class="btn btn-primary w-100"  id="addtoCart">Add Item to Order</button>
                         </form>
                     </div>
                 </div>
@@ -317,13 +323,13 @@
                                 <tr>
                                     <th>Customer</th>
                                     <th>Item</th>
-                                    <th>Quantity</th>
                                     <th>Price</th>
+                                    <th>Quantity</th>
                                     <th>Total</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
-                                <tbody id="orderTableBody">
+                                <tbody id="CartTableBody">
                                 <!-- Order items will be added here -->
                                 </tbody>
                             </table>

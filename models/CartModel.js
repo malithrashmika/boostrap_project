@@ -1,10 +1,10 @@
-export default class OrderItemModel {
-    constructor(customer_id, itemId,qty,price,total) {
-        this._itemId = itemId;
-        this._qty = qty;
-        this._price = price;
-        this._total = total;
+export default class CartModel {
+    constructor(customer_id, item_id,price,quantity,total) {
         this._customer_id = customer_id;
+        this._item_id = item_id;
+        this._price = price;
+        this._quantity = quantity;
+        this._total = total;
     }
 
     get customer_id() {
@@ -15,20 +15,20 @@ export default class OrderItemModel {
         this._customer_id = value;
     }
 
-    get itemId() {
-        return this._itemId;
+    get item_id() {
+        return this._item_id;
     }
 
-    set itemId(value) {
-        this._itemId = value;
+    set item_id(value) {
+        this._item_id = value;
     }
 
-    get qty() {
-        return this._qty;
+    get quantity() {
+        return this._quantity;
     }
 
-    set qty(value) {
-        this._qty = value;
+    set quantity(value) {
+        this._quantity = value;
     }
 
     get price() {
