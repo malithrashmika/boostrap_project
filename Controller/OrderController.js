@@ -16,17 +16,30 @@ inputDate.val(formattedDate);
 
 let setOrderID = () => {
     let OrderID = $("#inputOrderId");
+    console.log("Order Array:", order_array);
+
     if (order_array.length === 0) {
-        OrderID.val("OR001"); // Start from C001
+        OrderID.val("OR001"); // Start from OR001
     } else {
-        let lastId = order_array[order_array.length - 1].orderId.slice(1); // Remove "C"
+        const lastOrder = order_array[order_array.length - 1];
+        console.log("Last Order:", lastOrder);
+
+        if (!lastOrder || !lastOrder.orderId) {
+            console.error("Invalid order object or missing orderId property.");
+            OrderID.val("OR001"); // Fallback
+            return;
+        }
+
+        let lastId = lastOrder.orderId.slice(2); // Remove "OR"
         OrderID.val("OR" + (parseInt(lastId) + 1).toString().padStart(3, "0"));
     }
 };
+
 setOrderID();
 
 
 const loadCustomerIDs = () => {
+    console.log("Loading customer IDs...");
     let dropdown = $("#inputCustomerId");
 
     // Clear existing options
@@ -35,20 +48,25 @@ const loadCustomerIDs = () => {
 
     // Add customer IDs to the dropdown
     customer_array.forEach((customer) => {
+        console.log("Adding customer:", customer.customer_id); // Debug log
         dropdown.append(`<option value="${customer.customer_id}">${customer.customer_id}</option>`);
     });
 };
 
-// Bind the function to load customer IDs when the dropdown is clicked
+let customerDropdownLoaded = false; // Track if dropdown has been loaded
+
 $("#inputCustomerId").on("focus", function () {
-    // Load customer IDs when the dropdown is focused (click or tabbed to)
-    loadCustomerIDs();
+    if (!customerDropdownLoaded) {
+        loadCustomerIDs();
+        customerDropdownLoaded = true; // Set flag to true
+    }
 });
+
 
 // Event handler for when a customer ID is selected
 $("#inputCustomerId").on("change", function () {
     const selectedCustomerId = $(this).val(); // Get the selected customer ID
-
+    console.log("Customer ID changed to:", selectedCustomerId);
     // Find the selected customer from the customer_array
     const selectedCustomer = customer_array.find(item => item.customer_id === selectedCustomerId);
 
@@ -70,16 +88,17 @@ const loadItemIDs = () => {
 
     // Clear existing options
     dropdown.empty();
-    dropdown.append(`<option selected disabled value="">Choose Item</option>`);
+    dropdown.append('<option selected disabled value="">Choose Item</option>');
 
-    // Add items to the dropdown
-    item_array.forEach((item) => {
-        dropdown.append(`<option value="${item.item_id}">${item.item_id}</option>`);
+    // Populate the dropdown with items
+    item_array.forEach(item => {
+        if (item.quantity > 0) {
+            dropdown.append(`<option value="${item.item_id}">${item.item_id}</option>`);
+        }
     });
 
-    console.log("Loaded Item IDs:", item_array.map(item => item.item_id)); // Debugging log
+    console.log("Item dropdown reloaded with available items.");
 };
-
 
 $(document).ready(function () {
     // Load items on page load
@@ -263,11 +282,118 @@ $("#CartTableBody").on("click", ".delete-btn", function () {
     loadItemIDs();
 });
 
+$("#placeOrder").on("click", function () {
+    // Validate the cart
+    if (cart_array.length === 0) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'The cart is empty. Add items before placing an order.',
+        });
+        return;
+    }
+
+    const dropdown = $("#inputCustomerId");
+    console.log("Dropdown Element:", dropdown); // Log the element
+    console.log("Dropdown Value:", dropdown.val()); // Log the value directly
+
+    const customerId = dropdown.val();
+    if (!customerId) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Please select a customer.',
+        });
+        return;
+    }
+    console.log("Selected Customer ID at Place Order:", customerId);
+
+    // Generate order details
+    const orderId = $("#inputOrderId").val();
+    const orderDate = $("#inputDate").val();
+    const totalAmount = cart_array.reduce((sum, cart) => sum + cart.total, 0);
+
+    // Find the customer by ID
+    const customer = customer_array.find(cust => cust.customer_id === customerId);
+    const customerName = customer ? `${customer.first_name} ${customer.last_name}` : "Unknown";
+
+    const order = new OrderModel(orderId, customerId, formattedDate, totalAmount, [...cart_array]);
+
+    if (!order.orderId || !order.customerId || !Array.isArray(order.cartItems)) {
+        console.error("Malformed order object:", order);
+        return;
+    }
+
+    order_array.push(order);
+
+
+    // Add the order to the order details table
+    $("#orderHistoryBody").append(`
+        <tr>
+            <td>${orderDate}</td>
+            <td>${customerName}</td>
+            <td>${totalAmount.toFixed(2)}</td>
+            <td>
+                <button class="btn btn-info btn-sm view-details-btn" data-order-id="${orderId}" data-bs-toggle="modal" data-bs-target="#orderDetailsModal">View Details</button>
+            </td>
+        </tr>
+    `);
+
+    // Clear the cart and reset the form
+    cart_array.length = 0; // Empty the cart array
+    $("#CartTableBody").empty(); // Clear the cart table UI
+    cleanCartForm(); // Clear form inputs
+    setOrderID(); // Generate the next order ID
+
+    // Show success alert
+    Swal.fire({
+        icon: 'success',
+        title: 'Order Placed',
+        text: `Order ${orderId} placed successfully! Total: $${totalAmount.toFixed(2)}`,
+    });
+
+    console.log("Order placed:", order);
+});
+
+// Event handler for viewing order details
+$("#orderHistoryBody").on("click", ".view-details-btn", function () {
+    const orderId = $(this).data("order-id"); // Get the order ID from the button
+
+    // Find the order by ID
+    const order = order_array.find(ord => ord.order_id === orderId);
+
+    if (order) {
+        // Populate the modal with order items
+        const orderItemsList = $("#orderItemsList");
+        orderItemsList.empty(); // Clear any existing items
+
+        order.cart.forEach(cartItem => {
+            orderItemsList.append(`
+                <li class="list-group-item">
+                    <strong>Item ID:</strong> ${cartItem.item_id} 
+                    <strong>Name:</strong> ${cartItem.name} 
+                    <strong>Quantity:</strong> ${cartItem.quantity} 
+                    <strong>Total:</strong> $${cartItem.total.toFixed(2)}
+                </li>
+            `);
+        });
+
+        // Show the modal
+        $("#orderDetailsModal").modal("show");
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Order not found.',
+        });
+    }
+});
 
 
 // Clear the form inputs
 const cleanCartForm = () => {
-    $("#inputCustomerId").val("");
+    console.log("Skipping customer ID clearing for debugging.");
+    // $("#inputCustomerId").val(""); // Temporarily comment this line out
     $('#inputCustomerName').val("");
     $("#itemSelect").val("");
     $('#inputItemName').val("");
@@ -275,6 +401,7 @@ const cleanCartForm = () => {
     $('#inputOnHandQty').val("");
     $('#quantity').val("");
 };
+
 
 
 
