@@ -3,16 +3,24 @@ import OrderModel from "../models/orderModel.js";
 import CartModel from "../models/CartModel.js";
 import ItemModel from "../models/ItemModel.js";
 
-
-
-let inputDate = $("#inputDate");
-
-
-
-// set date
+// Get the current date
 const date = new Date();
-const formattedDate = `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
-inputDate.val(formattedDate);
+
+// Format the date as YYYY-MM-DD
+const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+let setDate=()=>{
+    let inputDate  = $("#date");
+    if (inputDate.length > 0) {
+        // Set the formatted date to the input field
+        inputDate.val(formattedDate);
+    } else {
+        console.error("Date input element not found. Ensure the element exists with ID 'date'.");
+    }
+};
+$(document).ready(function () {
+    setDate();
+});
+
 
 let setOrderID = () => {
     let OrderID = $("#inputOrderId");
@@ -325,12 +333,13 @@ $("#placeOrder").on("click", function () {
     }
 
     order_array.push(order);
+    console.log(order);
 
 
     // Add the order to the order details table
     $("#orderHistoryBody").append(`
         <tr>
-            <td>${orderDate}</td>
+            <td>${formattedDate}</td>
             <td>${customerName}</td>
             <td>${totalAmount.toFixed(2)}</td>
             <td>
